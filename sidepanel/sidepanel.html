@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SFDevHub - Side Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="env-banner" role="status" aria-live="polite">
+    <span id="sp-env-text">SANDBOX</span>
+    <span class="dot" aria-hidden="true"></span>
+  </div>
+
+  <header class="top-bar" role="banner">
+    <div class="top-left">
+      <span class="brand">SFDevHub</span>
+      <div class="search-wrap" role="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" class="search-input" placeholder="Search metadata..." aria-label="Search" id="sp-search">
+      </div>
+    </div>
+    <div class="top-right">
+      <button class="icon-btn" id="sp-export-all" aria-label="Export Results" title="Export CSV">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Settings" title="Settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="side-nav" role="navigation" aria-label="Tools">
+      <div class="nav-top">
+        <button class="nav-btn active" aria-label="SOQL Console" aria-current="page" data-panel="soql" title="Console">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span>Console</span>
+        </button>
+        <button class="nav-btn" aria-label="Metadata Browser" data-panel="metadata" title="Metadata">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span>Metadata</span>
+        </button>
+        <button class="nav-btn" aria-label="Clipboard Toolkit" data-panel="clipboard" title="Clipboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Clipboard</span>
+        </button>
+        <button class="nav-btn" aria-label="Governor Limits" data-panel="limits" title="Limits">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span>Limits</span>
+        </button>
+      </div>
+      <div class="nav-bottom">
+        <button class="nav-btn" aria-label="Settings" data-panel="settings" title="Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <main class="main" role="main">
+      <div class="pulse-bar" aria-hidden="true"></div>
+
+      <!-- SOQL Console Panel -->
+      <section class="panel active" id="panel-soql" aria-label="SOQL Console">
+        <div class="panel-header">
+          <div>
+            <h1 class="panel-title">SOQL Console <span class="badge">Active</span></h1>
+            <p class="panel-subtitle">Execute queries against your org</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn-ghost" id="sp-recent" aria-label="Recent Queries">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Recent
+            </button>
+            <button class="btn-ghost" id="sp-save-query" aria-label="Save Query">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save
+            </button>
+            <button class="btn-run" id="sp-run" aria-label="Run Query (Ctrl+Enter)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Run
+            </button>
+          </div>
+        </div>
+
+        <div class="panels-grid">
+          <div class="editor-panel">
+            <div class="sub-header">
+              <span class="sub-label">Query Editor</span>
+              <div class="sub-actions">
+                <button class="sub-btn" id="sp-clear" aria-label="Clear" title="Clear">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+                <button class="sub-btn" id="sp-format" aria-label="Format" title="Format">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="7" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="editor"
+                 contenteditable="true"
+                 spellcheck="false"
+                 role="textbox"
+                 aria-label="SOQL query editor"
+                 aria-multiline="true"
+                 id="sp-editor"
+                 tabindex="0">SELECT Id, Name, Industry
+FROM Account
+WHERE Industry = 'Technology'
+ORDER BY Name ASC
+LIMIT 50</div>
+            <div class="editor-footer">
+              <span id="sp-cursor">Line 1, Col 1</span>
+              <span id="sp-status">Ready</span>
+            </div>
+          </div>
+
+          <div class="results-panel">
+            <div class="sub-header">
+              <span class="sub-label" id="sp-results-label">RESULTS</span>
+              <div class="sub-actions">
+                <button class="sub-btn" id="sp-copy-results" aria-label="Copy Results" title="Copy as JSON" disabled>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+                <button class="sub-btn" id="sp-csv-results" aria-label="Export CSV" title="Export CSV" disabled>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="results-body" id="sp-results">
+              <div class="empty-state">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                <p>Run a query to see results</p>
+                <p class="empty-hint">Ctrl+Enter to execute</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saved Queries Drawer -->
+        <div class="drawer" id="sp-saved-drawer" style="display:none">
+          <div class="drawer-header">
+            <h3>Saved Queries</h3>
+            <button class="icon-btn" id="sp-close-drawer" aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="drawer-body" id="sp-saved-list"></div>
+        </div>
+      </section>
+
+      <!-- Metadata Panel -->
+      <section class="panel" id="panel-metadata" aria-label="Metadata Browser">
+        <div class="panel-header">
+          <div>
+            <h1 class="panel-title">Metadata Browser</h1>
+            <p class="panel-subtitle">Browse Apex, Triggers, Flows, VF Pages</p>
+          </div>
+          <div class="panel-actions">
+            <select class="select-input" id="md-type" aria-label="Metadata type">
+              <option value="ApexClass">Apex Classes</option>
+              <option value="ApexTrigger">Apex Triggers</option>
+              <option value="Flow">Flows</option>
+              <option value="ApexPage">VF Pages</option>
+              <option value="Profile">Profiles</option>
+            </select>
+            <button class="btn-ghost" id="md-fetch" aria-label="Fetch Metadata">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Load
+            </button>
+          </div>
+        </div>
+        <div class="metadata-list" id="md-results">
+          <div class="empty-state">
+            <p>Select a type and click Load</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Clipboard Panel -->
+      <section class="panel" id="panel-clipboard" aria-label="Clipboard Toolkit">
+        <div class="panel-header">
+          <div>
+            <h1 class="panel-title">Clipboard Toolkit</h1>
+            <p class="panel-subtitle">Copy record data in multiple formats</p>
+          </div>
+        </div>
+        <div class="clipboard-section">
+          <div class="clip-actions">
+            <button class="clip-btn" id="clip-json">
+              <strong>Copy as JSON</strong>
+              <span>Full record data</span>
+            </button>
+            <button class="clip-btn" id="clip-apex">
+              <strong>Copy as Apex Map</strong>
+              <span>Map&lt;String, Object&gt; syntax</span>
+            </button>
+            <button class="clip-btn" id="clip-soql">
+              <strong>Copy as SOQL</strong>
+              <span>SELECT query for this record</span>
+            </button>
+            <button class="clip-btn" id="clip-csv">
+              <strong>Copy as CSV</strong>
+              <span>Comma-separated values</span>
+            </button>
+            <button class="clip-btn" id="clip-ids">
+              <strong>Copy Record ID</strong>
+              <span>18-character ID</span>
+            </button>
+          </div>
+          <div class="clip-preview" id="clip-preview">
+            <div class="preview-header">
+              <span>Preview</span>
+              <button class="sub-btn" id="clip-copy-preview" aria-label="Copy preview" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <pre class="preview-code" id="clip-code">Navigate to a record page to preview data</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Limits Panel -->
+      <section class="panel" id="panel-limits" aria-label="Governor Limits">
+        <div class="panel-header">
+          <div>
+            <h1 class="panel-title">Governor Limits</h1>
+            <p class="panel-subtitle">Org usage and limits</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn-ghost" id="limits-refresh" aria-label="Refresh Limits">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div class="limits-body" id="limits-body">
+          <div class="empty-state">
+            <p>Click Refresh to load org limits</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span id="toast-text"></span>
+  </div>
+
+  <script src="../utils/storage.js"></script>
+  <script src="../utils/soql.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

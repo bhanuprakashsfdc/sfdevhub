@@ -1,0 +1,98 @@
+{
+  "manifest_version": 3,
+  "name": "SFDevHub",
+  "version": "1.0.0",
+  "description": "Salesforce power-user toolkit - SOQL console, record inspector, metadata browser, bulk data tools, and productivity boosters",
+  "minimum_chrome_version": "116",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "SFDevHub"
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.salesforce.com/*",
+        "https://*.force.com/*",
+        "https://*.lightning.force.com/*",
+        "https://*.my.salesforce.com/*",
+        "https://*.vf.force.com/*"
+      ],
+      "js": [
+        "utils/page-detector.js",
+        "utils/storage.js",
+        "content-scripts/injector.js"
+      ],
+      "css": [
+        "styles/shared.css",
+        "content-scripts/overlay.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "sidePanel",
+    "clipboardWrite",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.salesforce.com/*",
+    "https://*.force.com/*",
+    "https://*.visualforce.com/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "open-soql-console": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Open SOQL Console"
+    },
+    "quick-search": {
+      "suggested_key": {
+        "default": "Alt+K",
+        "mac": "Alt+K"
+      },
+      "description": "Quick Search Navigator"
+    },
+    "toggle-api-names": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Alt+A"
+      },
+      "description": "Toggle API Names"
+    },
+    "copy-record-id": {
+      "suggested_key": {
+        "default": "Alt+I",
+        "mac": "Alt+I"
+      },
+      "description": "Copy Record ID"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

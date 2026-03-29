@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SFDevHub - SOQL Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface": "#dee2ec",
+                        "inverse-primary": "#005fac",
+                        "on-tertiary": "#522300",
+                        "error-container": "#93000a",
+                        "on-primary": "#00315d",
+                        "on-tertiary-fixed-variant": "#753400",
+                        "on-tertiary-container": "#fffcff",
+                        "secondary": "#83d996",
+                        "primary-container": "#0176d3",
+                        "tertiary-container": "#bc5800",
+                        "outline-variant": "#414752",
+                        "outline": "#8b919e",
+                        "tertiary-fixed": "#ffdbc8",
+                        "on-primary-fixed-variant": "#004884",
+                        "surface-container-low": "#171c23",
+                        "surface-container-lowest": "#090f15",
+                        "surface": "#0f141b",
+                        "surface-container": "#1b2027",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#30353d",
+                        "primary-fixed": "#d4e3ff",
+                        "surface-dim": "#0f141b",
+                        "inverse-surface": "#dee2ec",
+                        "primary": "#a4c9ff",
+                        "tertiary-fixed-dim": "#ffb68b",
+                        "on-secondary": "#003918",
+                        "background": "#0f141b",
+                        "on-background": "#dee2ec",
+                        "surface-container-high": "#252a32",
+                        "secondary-fixed": "#9ff6b0",
+                        "surface-tint": "#a4c9ff",
+                        "on-primary-fixed": "#001c39",
+                        "on-primary-container": "#fefcff",
+                        "on-tertiary-fixed": "#321200",
+                        "on-surface-variant": "#c0c7d4",
+                        "secondary-container": "#026831",
+                        "secondary-fixed-dim": "#83d996",
+                        "on-secondary-container": "#8de4a0",
+                        "surface-container-highest": "#30353d",
+                        "inverse-on-surface": "#2c3138",
+                        "surface-bright": "#343941",
+                        "tertiary": "#ffb68b",
+                        "on-secondary-fixed-variant": "#005226",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#00210b",
+                        "on-error": "#690005"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f141b; color: #dee2ec; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #414752; border-radius: 2px; }
+        .code-editor { font-family: 'Monaco', 'Consolas', monospace; }
+        .glass-panel { backdrop-filter: blur(12px); background: rgba(37, 42, 50, 0.8); }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+<!-- Environment Banner -->
+<div class="w-full bg-secondary-container text-on-secondary-container px-4 py-1 flex items-center justify-center gap-2 z-[60]">
+<span class="text-[0.625rem] font-bold tracking-[0.1em] uppercase">SANDBOX - CS21</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+</div>
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center px-5 h-12 w-full fixed top-6 z-50 bg-[#1b2027] dark:bg-[#1b2027] font-['Inter'] text-[0.75rem] tracking-tight">
+<div class="flex items-center gap-6">
+<span class="text-sm font-bold tracking-tighter text-[#c0c7d4]">SFDevHub</span>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[#c0c7d4] text-[18px]">search</span>
+<input class="bg-[#252a32] border-none rounded-md pl-10 pr-4 py-1.5 w-64 text-on-surface-variant focus:ring-1 focus:ring-primary-container text-[0.75rem]" placeholder="Search components or metadata..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 text-[#c0c7d4] hover:bg-[#30353d] transition-colors px-3 py-1.5 rounded text-[0.75rem]">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                Export
+            </button>
+<div class="flex items-center gap-1 border-l border-[#414752]/30 pl-4">
+<button class="p-2 text-[#c0c7d4] hover:bg-[#30353d] transition-colors rounded">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<button class="p-2 text-[#c0c7d4] hover:bg-[#30353d] transition-colors rounded">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+<button class="p-1 ml-2">
+<div class="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center text-[10px] font-bold text-on-primary-container">
+                        JD
+                    </div>
+</button>
+</div>
+</div>
+</nav>
+<!-- Sidebar & Content Layout -->
+<div class="flex flex-1 pt-[72px]">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-6 h-[calc(100vh-24px)] flex flex-col items-center py-4 z-40 bg-[#171c23] dark:bg-[#171c23] border-r-[1px] border-[#414752]/15 w-16 transition-all duration-150 ease-in-out">
+<div class="mb-8 flex flex-col items-center gap-1">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 w-full px-2">
+<!-- Record Tools -->
+<button class="group relative flex flex-col items-center justify-center py-3 w-full rounded-lg text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-[22px]">data_object</span>
+<span class="text-[0.5rem] mt-1 font-medium tracking-tight">Records</span>
+</button>
+<!-- SOQL Console (ACTIVE) -->
+<button class="group relative flex flex-col items-center justify-center py-3 w-full rounded-lg text-[#a4c9ff] bg-[#1b2027] border-l-2 border-[#83d996] transition-all">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="text-[0.5rem] mt-1 font-bold tracking-tight">Console</span>
+</button>
+<!-- Org Management -->
+<button class="group relative flex flex-col items-center justify-center py-3 w-full rounded-lg text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-[22px]">account_tree</span>
+<span class="text-[0.5rem] mt-1 font-medium tracking-tight">Org</span>
+</button>
+<!-- Metadata -->
+<button class="group relative flex flex-col items-center justify-center py-3 w-full rounded-lg text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-[22px]">travel_explore</span>
+<span class="text-[0.5rem] mt-1 font-medium tracking-tight">Meta</span>
+</button>
+<!-- Dev Tools -->
+<button class="group relative flex flex-col items-center justify-center py-3 w-full rounded-lg text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-[22px]">construction</span>
+<span class="text-[0.5rem] mt-1 font-medium tracking-tight">Tools</span>
+</button>
+</div>
+<div class="mt-auto flex flex-col gap-2 w-full px-2">
+<button class="flex flex-col items-center justify-center py-3 w-full rounded-lg text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-[20px]">campaign</span>
+</button>
+<button class="flex flex-col items-center justify-center py-3 w-full rounded-lg text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area (Canvas) -->
+<main class="flex-1 ml-16 flex flex-col p-6 overflow-hidden">
+<!-- Performance Pulse Line -->
+<div class="fixed top-[72px] left-16 right-0 h-[2px] bg-gradient-to-r from-secondary to-secondary-container z-40 opacity-50"></div>
+<header class="flex justify-between items-end mb-6">
+<div>
+<h1 class="text-headline-sm font-headline font-semibold text-on-surface flex items-center gap-3">
+                        SOQL Console
+                        <span class="text-label-sm font-label uppercase tracking-widest text-primary px-2 py-0.5 rounded bg-primary-container/20 border border-primary/20">Active Session</span>
+</h1>
+<p class="text-body-sm text-on-surface-variant mt-1">Execute queries against NA42.PROD environment</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 rounded-md bg-surface-container-high text-on-surface text-[0.75rem] font-medium border border-[#414752]/30 hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                        Recent Queries
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-md bg-gradient-to-br from-primary-container to-primary text-on-primary-container text-[0.75rem] font-bold shadow-lg shadow-primary/10 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        Run Query
+                    </button>
+</div>
+</header>
+<!-- Editor & Grid Bento Layout -->
+<div class="flex-1 grid grid-rows-[300px_1fr] gap-4 overflow-hidden">
+<!-- Query Editor Area -->
+<section class="bg-surface-container-lowest rounded-lg border border-[#414752]/15 flex flex-col overflow-hidden">
+<div class="h-8 bg-surface-container-low flex items-center justify-between px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label tracking-widest text-[#c0c7d4]">Query Editor</span>
+<span class="text-[10px] text-outline px-1.5 py-0.5 rounded bg-surface-container-high">SOQL</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex-1 p-4 code-editor text-[13px] leading-relaxed text-secondary-fixed selection:bg-primary/30 outline-none" contenteditable="true" spellcheck="false">
+<span class="text-primary">SELECT</span> Id, Name, AccountNumber, Industry, AnnualRevenue, ( <span class="text-primary">SELECT</span> LastName <span class="text-primary">FROM</span> Contacts )<br/>
+<span class="text-primary">FROM</span> Account<br/>
+<span class="text-primary">WHERE</span> Industry = <span class="text-secondary">'Technology'</span><br/>
+<span class="text-primary">AND</span> AnnualRevenue &gt; 1000000<br/>
+<span class="text-primary">ORDER BY</span> Name <span class="text-primary">ASC</span><br/>
+<span class="text-primary">LIMIT</span> 50
+                    </div>
+<div class="h-8 bg-surface-container-low/50 flex items-center px-4 justify-between border-t border-[#414752]/10">
+<span class="text-[10px] text-outline uppercase tracking-wider">Line 6, Col 12</span>
+<span class="text-[10px] text-outline uppercase tracking-wider">Total Predicted Rows: ~2.4k</span>
+</div>
+</section>
+<!-- Results Grid Area -->
+<section class="bg-surface-container rounded-lg border border-[#414752]/15 flex flex-col overflow-hidden">
+<div class="px-5 py-3 flex justify-between items-center border-b border-[#414752]/15">
+<div class="flex items-center gap-4">
+<h2 class="text-label-sm font-bold tracking-widest text-on-surface-variant">QUERY RESULTS (50 OF 2,410)</h2>
+<div class="h-4 w-[1px] bg-[#414752]"></div>
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-secondary">32 selected</span>
+<button class="text-[10px] font-bold text-primary hover:underline uppercase tracking-tighter">Clear Selection</button>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-highest text-on-surface text-[11px] font-semibold hover:bg-surface-bright transition-colors border border-outline-variant/15">
+<span class="material-symbols-outlined text-[14px]">edit</span>
+                                Mass Update
+                            </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-highest text-on-surface text-[11px] font-semibold hover:bg-surface-bright transition-colors border border-outline-variant/15">
+<span class="material-symbols-outlined text-[14px]">csv</span>
+                                Export CSV
+                            </button>
+</div>
+</div>
+<div class="flex-1 overflow-auto custom-scrollbar">
+<table class="w-full text-left text-body-sm border-collapse">
+<thead class="sticky top-0 z-10">
+<tr class="bg-surface-container-low text-on-surface-variant font-medium text-[11px]">
+<th class="p-2.5 w-10 text-center"><input class="rounded border-outline-variant/30 bg-surface-container-lowest text-primary-container focus:ring-0" type="checkbox"/></th>
+<th class="p-2.5 uppercase tracking-wider">Record Id</th>
+<th class="p-2.5 uppercase tracking-wider">Name</th>
+<th class="p-2.5 uppercase tracking-wider">Industry</th>
+<th class="p-2.5 uppercase tracking-wider text-right">Annual Revenue</th>
+<th class="p-2.5 uppercase tracking-wider">Status</th>
+<th class="p-2.5 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-2.5 text-center"><input checked="" class="rounded border-outline-variant/30 bg-surface-container-lowest text-primary-container focus:ring-0" type="checkbox"/></td>
+<td class="p-2.5 text-primary font-medium">0018W00002Fk9zQ</td>
+<td class="p-2.5 font-semibold">TechFlow Systems Inc.</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-surface-container-high text-[10px]">Technology</span></td>
+<td class="p-2.5 text-right tabular-nums">$12,450,000</td>
+<td class="p-2.5"><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Active</span></td>
+<td class="p-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-2.5 text-center"><input checked="" class="rounded border-outline-variant/30 bg-surface-container-lowest text-primary-container focus:ring-0" type="checkbox"/></td>
+<td class="p-2.5 text-primary font-medium">0018W00002Fk9zR</td>
+<td class="p-2.5 font-semibold">Cloud Scale Solutions</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-surface-container-high text-[10px]">Technology</span></td>
+<td class="p-2.5 text-right tabular-nums">$4,200,000</td>
+<td class="p-2.5"><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Active</span></td>
+<td class="p-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group bg-primary/5">
+<td class="p-2.5 text-center"><input checked="" class="rounded border-outline-variant/30 bg-surface-container-lowest text-primary-container focus:ring-0" type="checkbox"/></td>
+<td class="p-2.5 text-primary font-medium">0018W00002Fk9zS</td>
+<td class="p-2.5 font-semibold">DataNexus Global</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-surface-container-high text-[10px]">Technology</span></td>
+<td class="p-2.5 text-right tabular-nums">$28,900,000</td>
+<td class="p-2.5"><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Pending</span></td>
+<td class="p-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-2.5 text-center"><input class="rounded border-outline-variant/30 bg-surface-container-lowest text-primary-container focus:ring-0" type="checkbox"/></td>
+<td class="p-2.5 text-primary font-medium">0018W00002Fk9zT</td>
+<td class="p-2.5 font-semibold">Vertex Cyber Security</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-surface-container-high text-[10px]">Technology</span></td>
+<td class="p-2.5 text-right tabular-nums">$1,800,000</td>
+<td class="p-2.5"><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Active</span></td>
+<td class="p-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Filler rows to show density -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-2.5 text-center"><input class="rounded border-outline-variant/30 bg-surface-container-lowest text-primary-container focus:ring-0" type="checkbox"/></td>
+<td class="p-2.5 text-primary font-medium">0018W00002Fk9zU</td>
+<td class="p-2.5 font-semibold">OmniChannel SaaS</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded-full bg-surface-container-high text-[10px]">Technology</span></td>
+<td class="p-2.5 text-right tabular-nums">$7,120,000</td>
+<td class="p-2.5"><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-error"></span> Flagged</span></td>
+<td class="p-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<footer class="px-5 h-10 border-t border-[#414752]/15 flex items-center justify-between bg-surface-container-low text-[10px] uppercase tracking-widest font-label text-outline">
+<div class="flex gap-6">
+<span>Showing 1-50 of 2,410 Records</span>
+<span>Execution Time: 42ms</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+                                Prev
+                            </button>
+<div class="flex gap-2">
+<span class="text-primary font-bold px-1.5 bg-primary/10 rounded">1</span>
+<span class="hover:text-primary cursor-pointer px-1.5">2</span>
+<span class="hover:text-primary cursor-pointer px-1.5">3</span>
+<span>...</span>
+<span class="hover:text-primary cursor-pointer px-1.5">49</span>
+</div>
+<button class="flex items-center gap-1 hover:text-primary transition-colors">
+                                Next
+                                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</footer>
+</section>
+</div>
+</main>
+<!-- Right Advanced Side Panel (Metadata Context) -->
+<aside class="w-72 bg-surface-container-low border-l border-[#414752]/15 flex flex-col z-30">
+<div class="p-4 border-b border-[#414752]/15">
+<h3 class="text-label-sm font-bold tracking-widest text-on-surface-variant mb-4 uppercase">Object Context</h3>
+<div class="p-3 bg-surface-container-lowest rounded-md border border-[#414752]/10 mb-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">table_chart</span>
+<span class="text-[0.75rem] font-bold">Account</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[11px]">
+<span class="text-on-surface-variant">Fields</span>
+<span class="text-on-surface">124</span>
+</div>
+<div class="flex justify-between text-[11px]">
+<span class="text-on-surface-variant">Record Types</span>
+<span class="text-on-surface">4</span>
+</div>
+<div class="flex justify-between text-[11px]">
+<span class="text-on-surface-variant">API Name</span>
+<span class="text-on-surface italic">Account</span>
+</div>
+</div>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-outline text-[14px]">search</span>
+<input class="w-full bg-surface-container-high border border-outline-variant/20 rounded py-1.5 pl-7 pr-3 text-[11px] text-on-surface focus:outline-none focus:ring-1 focus:ring-primary/50" placeholder="Filter fields..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-2">
+<ul class="space-y-1">
+<li class="flex items-center justify-between p-2 rounded hover:bg-surface-container-high group cursor-pointer">
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-on-surface">Id</span>
+<span class="text-[9px] text-outline">ID (Primary Key)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] opacity-0 group-hover:opacity-100 text-primary">add</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded hover:bg-surface-container-high group cursor-pointer bg-primary/5">
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-on-surface">Name</span>
+<span class="text-[9px] text-outline">String (255)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded hover:bg-surface-container-high group cursor-pointer bg-primary/5">
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-on-surface">AccountNumber</span>
+<span class="text-[9px] text-outline">String (40)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded hover:bg-surface-container-high group cursor-pointer">
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-on-surface">AnnualRevenue</span>
+<span class="text-[9px] text-outline">Currency (18, 0)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] opacity-0 group-hover:opacity-100 text-primary">add</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded hover:bg-surface-container-high group cursor-pointer">
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-on-surface">BillingCity</span>
+<span class="text-[9px] text-outline">String (40)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] opacity-0 group-hover:opacity-100 text-primary">add</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded hover:bg-surface-container-high group cursor-pointer">
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-on-surface">CreatedById</span>
+<span class="text-[9px] text-outline">Lookup (User)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] opacity-0 group-hover:opacity-100 text-primary">add</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded hover:bg-surface-container-high group cursor-pointer">
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-on-surface">Industry</span>
+<span class="text-[9px] text-outline">Picklist</span>
+</div>
+<span class="material-symbols-outlined text-[14px] opacity-0 group-hover:opacity-100 text-primary">add</span>
+</li>
+</ul>
+</div>
+<div class="p-4 bg-surface-container-lowest border-t border-[#414752]/15">
+<button class="w-full py-2 rounded bg-primary-container/10 border border-primary-container text-primary text-[11px] font-bold hover:bg-primary-container hover:text-on-primary-container transition-all uppercase tracking-widest">
+                    Describe SObject
+                </button>
+</div>
+</aside>
+</div>
+<!-- Floating Tooltip / Status -->
+<div class="fixed bottom-6 right-6 flex items-center gap-3 px-4 py-2 bg-surface-container-highest border border-outline-variant/20 rounded-lg shadow-2xl glass-panel z-50">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[11px] font-medium text-on-surface">NA42 Connected</span>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant/30"></div>
+<div class="text-[11px] text-on-surface-variant">API v58.0</div>
+</div>
+</body></html>
