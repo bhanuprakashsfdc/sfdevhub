@@ -1,0 +1,131 @@
+:root {
+  --sfdevhub-surface: #0f141b;
+  --sfdevhub-surface-dim: #0f141b;
+  --sfdevhub-surface-lowest: #090f15;
+  --sfdevhub-surface-low: #171c23;
+  --sfdevhub-surface-container: #1b2027;
+  --sfdevhub-surface-high: #252a32;
+  --sfdevhub-surface-highest: #30353d;
+  --sfdevhub-surface-bright: #343941;
+
+  --sfdevhub-on-surface: #dee2ec;
+  --sfdevhub-on-surface-variant: #c0c7d4;
+
+  --sfdevhub-primary: #a4c9ff;
+  --sfdevhub-primary-container: #0176d3;
+  --sfdevhub-on-primary-container: #fefcff;
+
+  --sfdevhub-secondary: #83d996;
+  --sfdevhub-secondary-container: #026831;
+  --sfdevhub-on-secondary-container: #8de4a0;
+
+  --sfdevhub-error: #ffb4ab;
+  --sfdevhub-error-container: #93000a;
+  --sfdevhub-on-error-container: #ffdad6;
+
+  --sfdevhub-outline: #8b919e;
+  --sfdevhub-outline-variant: #414752;
+
+  --sfdevhub-tertiary: #ffb68b;
+  --sfdevhub-tertiary-container: #bc5800;
+
+  --sfdevhub-radius-sm: 0.125rem;
+  --sfdevhub-radius-md: 0.25rem;
+  --sfdevhub-radius-lg: 0.5rem;
+  --sfdevhub-radius-full: 9999px;
+
+  --sfdevhub-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sfdevhub-mono: "Monaco", "Consolas", "Menlo", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.sfdevhub-api-badge {
+  display: inline-block;
+  font-size: 10px !important;
+  font-family: var(--sfdevhub-mono) !important;
+  color: var(--sfdevhub-primary) !important;
+  background: rgba(1, 118, 211, 0.15) !important;
+  padding: 1px 6px !important;
+  border-radius: var(--sfdevhub-radius-sm) !important;
+  margin-left: 6px !important;
+  cursor: pointer !important;
+  vertical-align: middle !important;
+  transition: background 0.15s ease !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+}
+
+.sfdevhub-api-badge:hover {
+  background: rgba(1, 118, 211, 0.3) !important;
+}
+
+.sfdevhub-api-badge.sfdevhub-copied {
+  background: var(--sfdevhub-secondary-container) !important;
+  color: var(--sfdevhub-on-secondary-container) !important;
+}
+
+.sfdevhub-required-highlight {
+  border-left: 3px solid var(--sfdevhub-tertiary) !important;
+  padding-left: 8px !important;
+}
+
+.sfdevhub-required-marker {
+  position: absolute !important;
+  top: 2px !important;
+  right: 4px !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: var(--sfdevhub-tertiary) !important;
+  font-family: var(--sfdevhub-font) !important;
+}
+
+.sfdevhub-collapsed {
+  max-height: 32px !important;
+  overflow: hidden !important;
+  opacity: 0.5 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.sfdevhub-collapsed:hover {
+  opacity: 0.7 !important;
+}
+
+#sfdevhub-toast {
+  position: fixed !important;
+  bottom: 24px !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(20px) !important;
+  padding: 8px 20px !important;
+  background: rgba(37, 42, 50, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-radius: var(--sfdevhub-radius-full) !important;
+  border: 1px solid rgba(65, 71, 82, 0.2) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--sfdevhub-secondary) !important;
+  font-family: var(--sfdevhub-font) !important;
+  z-index: 99999999 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+  white-space: nowrap !important;
+}
+
+#sfdevhub-toast.sfdevhub-toast-visible {
+  opacity: 1 !important;
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+.soql-keyword { color: var(--sfdevhub-primary); font-weight: 600; }
+.soql-string { color: var(--sfdevhub-secondary); }
+.soql-number { color: var(--sfdevhub-tertiary); }
+.soql-field { color: var(--sfdevhub-on-surface-variant); }

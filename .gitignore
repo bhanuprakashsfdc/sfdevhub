@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+build/
+*.zip
+*.crx
+*.pem
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Environment / Secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Chrome Extension
+extension.zip
+sfdevhub.zip
+
+# Salesforce DX
+.sfdx/
+.sf/
+
+# Cache
+.cache/
+*.cache
+
+# Coverage / Test
+coverage/
+.nyc_output/
+
+# Temp files
+*.tmp
+*.temp
+.tmp/
