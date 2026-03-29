@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SFDevHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="pulse" aria-hidden="true"></div>
+
+  <header class="top-bar" role="banner">
+    <div class="top-left">
+      <span class="brand">SFDevHub</span>
+      <div class="divider" aria-hidden="true"></div>
+      <nav role="tablist" aria-label="Views">
+        <button class="tab active" role="tab" aria-selected="true" data-view="dashboard" tabindex="0">Dashboard</button>
+        <button class="tab" role="tab" aria-selected="false" data-view="tools" tabindex="-1">Tools</button>
+        <button class="tab" role="tab" aria-selected="false" data-view="settings" tabindex="-1">Settings</button>
+      </nav>
+    </div>
+    <div class="top-right">
+      <button class="icon-btn" id="btn-sidepanel" aria-label="Open Side Panel" title="Side Panel (Alt+S)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Dashboard View -->
+  <main class="view active" id="view-dashboard" role="main">
+    <section class="env-bar" role="status" aria-live="polite" id="env-bar">
+      <div class="env-info">
+        <span class="env-label">Environment</span>
+        <span class="env-value" id="env-value">Detecting...</span>
+      </div>
+      <span class="env-icon" id="env-icon" aria-hidden="true">&#9888;</span>
+    </section>
+
+    <div class="search-bar" role="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="search-input" placeholder="Search objects, flows, apex..." aria-label="Quick search" autocomplete="off">
+      <kbd aria-hidden="true">Alt+K</kbd>
+    </div>
+
+    <section class="record-section" aria-label="Current Record">
+      <div class="section-header">
+        <h2>Active Record</h2>
+        <button class="text-btn" id="btn-refresh-record" aria-label="Refresh record info">Refresh</button>
+      </div>
+      <div class="record-card" id="record-card">
+        <div class="record-empty">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <p>Navigate to a Salesforce record page</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-actions" aria-label="Quick Actions">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <button class="action-card" id="qa-toggle-api" aria-label="Toggle API Names">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>Toggle API Names</span>
+        </button>
+        <button class="action-card" id="qa-highlight" aria-label="Highlight Required Fields">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <span>Required Fields</span>
+        </button>
+        <button class="action-card" id="qa-copy-id" aria-label="Copy Record ID">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Record ID</span>
+        </button>
+        <button class="action-card" id="qa-export-json" aria-label="Export Record as JSON">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Export JSON</span>
+        </button>
+        <button class="action-card" id="qa-soql" aria-label="Open SOQL Console">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span>SOQL Console</span>
+        </button>
+        <button class="action-card" id="qa-quick-search" aria-label="Quick Search Navigator">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Quick Search</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="saved-section" aria-label="Saved Queries">
+      <div class="section-header">
+        <h2>Saved Queries</h2>
+      </div>
+      <div class="saved-list" id="saved-queries">
+        <div class="empty-state">No saved queries yet</div>
+      </div>
+    </section>
+
+    <section class="saved-section" aria-label="Favorite Objects">
+      <div class="section-header">
+        <h2>Favorite Objects</h2>
+      </div>
+      <div class="favorites-list" id="favorites-list">
+        <div class="empty-state">No favorites yet</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Tools View -->
+  <main class="view" id="view-tools" role="main">
+    <section class="tools-grid">
+      <h2 class="section-title">Data & Record Tools</h2>
+      <div class="tool-cards">
+        <button class="tool-card" data-tool="api-names">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="tool-info"><strong>Toggle API Names</strong><span>Show field API names on record pages</span></div>
+        </button>
+        <button class="tool-card" data-tool="export-json">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+          <div class="tool-info"><strong>Export Record JSON</strong><span>Export current record data as JSON</span></div>
+        </button>
+        <button class="tool-card" data-tool="export-csv">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="tool-info"><strong>Export List as CSV</strong><span>Export list view data as CSV</span></div>
+        </button>
+        <button class="tool-card" data-tool="apex-map">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="tool-info"><strong>Copy as Apex Map</strong><span>Copy record as Apex Map syntax</span></div>
+        </button>
+      </div>
+
+      <h2 class="section-title">SOQL & Queries</h2>
+      <div class="tool-cards">
+        <button class="tool-card" data-tool="soql-console">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div class="tool-info"><strong>SOQL Console</strong><span>Run queries from the side panel</span></div>
+        </button>
+        <button class="tool-card" data-tool="auto-soql">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="tool-info"><strong>Auto-generate SOQL</strong><span>Generate query from current record</span></div>
+        </button>
+      </div>
+
+      <h2 class="section-title">Navigation</h2>
+      <div class="tool-cards">
+        <button class="tool-card" data-tool="quick-search">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <div class="tool-info"><strong>Quick Search</strong><span>Spotlight-style navigator (Alt+K)</span></div>
+        </button>
+      </div>
+
+      <h2 class="section-title">Metadata Shortcuts</h2>
+      <div class="tool-cards shortcuts-grid">
+        <a class="shortcut-btn" href="#" data-nav="objects">Object Manager</a>
+        <a class="shortcut-btn" href="#" data-nav="flows">Flows</a>
+        <a class="shortcut-btn" href="#" data-nav="apex">Apex Classes</a>
+        <a class="shortcut-btn" href="#" data-nav="triggers">Apex Triggers</a>
+        <a class="shortcut-btn" href="#" data-nav="profiles">Profiles</a>
+        <a class="shortcut-btn" href="#" data-nav="debug">Debug Logs</a>
+        <a class="shortcut-btn" href="#" data-nav="validation">Validation Rules</a>
+        <a class="shortcut-btn" href="#" data-nav="users">Users</a>
+      </div>
+
+      <h2 class="section-title">UI Enhancements</h2>
+      <div class="tool-cards">
+        <button class="tool-card" data-tool="sticky-headers">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>
+          <div class="tool-info"><strong>Sticky Headers</strong><span>Pin headers on record pages</span></div>
+        </button>
+        <button class="tool-card" data-tool="collapse-empty">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="tool-info"><strong>Collapse Empty Sections</strong><span>Hide empty sections on pages</span></div>
+        </button>
+        <button class="tool-card" data-tool="highlight-required">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div class="tool-info"><strong>Highlight Required Fields</strong><span>Show required field indicators</span></div>
+        </button>
+      </div>
+
+      <h2 class="section-title">Clipboard Toolkit</h2>
+      <div class="tool-cards">
+        <button class="tool-card" data-tool="copy-json">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+          <div class="tool-info"><strong>Copy as JSON</strong><span>Record data to clipboard</span></div>
+        </button>
+        <button class="tool-card" data-tool="copy-apex">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="tool-info"><strong>Copy as Apex Map</strong><span>Map syntax for Apex code</span></div>
+        </button>
+        <button class="tool-card" data-tool="copy-soql">
+          <div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg></div>
+          <div class="tool-info"><strong>Copy as SOQL</strong><span>SOQL snippet for current record</span></div>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings View -->
+  <main class="view" id="view-settings" role="main">
+    <section class="settings-section">
+      <h2>Preferences</h2>
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Show API Names</strong>
+          <span>Display field API names next to labels</span>
+        </div>
+        <button class="toggle" role="switch" aria-checked="false" id="set-api-names" aria-label="Show API Names"></button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Highlight Required Fields</strong>
+          <span>Mark required fields on record pages</span>
+        </div>
+        <button class="toggle" role="switch" aria-checked="false" id="set-highlight" aria-label="Highlight Required Fields"></button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Sticky Headers</strong>
+          <span>Keep headers visible when scrolling</span>
+        </div>
+        <button class="toggle" role="switch" aria-checked="false" id="set-sticky" aria-label="Sticky Headers"></button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Collapse Empty Sections</strong>
+          <span>Hide empty sections automatically</span>
+        </div>
+        <button class="toggle" role="switch" aria-checked="false" id="set-collapse" aria-label="Collapse Empty Sections"></button>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <h2>Keyboard Shortcuts</h2>
+      <div class="shortcut-row"><span>Quick Search</span><kbd>Alt+K</kbd></div>
+      <div class="shortcut-row"><span>SOQL Console</span><kbd>Alt+S</kbd></div>
+      <div class="shortcut-row"><span>Toggle API Names</span><kbd>Alt+A</kbd></div>
+      <div class="shortcut-row"><span>Copy Record ID</span><kbd>Alt+I</kbd></div>
+    </section>
+
+    <section class="settings-section">
+      <h2>Data Management</h2>
+      <div class="settings-actions">
+        <button class="btn-secondary" id="btn-export-settings">Export Settings</button>
+        <button class="btn-secondary" id="btn-import-settings">Import Settings</button>
+        <button class="btn-danger" id="btn-clear-data">Clear All Data</button>
+      </div>
+      <input type="file" id="import-file" accept=".json" style="display:none">
+    </section>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span id="toast-text"></span>
+  </div>
+
+  <script src="../utils/storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

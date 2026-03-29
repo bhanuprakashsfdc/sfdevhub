@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SFDevHub Extension</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#dee2ec",
+              "inverse-primary": "#005fac",
+              "on-tertiary": "#522300",
+              "error-container": "#93000a",
+              "on-primary": "#00315d",
+              "on-tertiary-fixed-variant": "#753400",
+              "on-tertiary-container": "#fffcff",
+              "secondary": "#83d996",
+              "primary-container": "#0176d3",
+              "tertiary-container": "#bc5800",
+              "outline-variant": "#414752",
+              "outline": "#8b919e",
+              "tertiary-fixed": "#ffdbc8",
+              "on-primary-fixed-variant": "#004884",
+              "surface-container-low": "#171c23",
+              "surface-container-lowest": "#090f15",
+              "surface": "#0f141b",
+              "surface-container": "#1b2027",
+              "error": "#ffb4ab",
+              "surface-variant": "#30353d",
+              "primary-fixed": "#d4e3ff",
+              "surface-dim": "#0f141b",
+              "inverse-surface": "#dee2ec",
+              "primary": "#a4c9ff",
+              "tertiary-fixed-dim": "#ffb68b",
+              "on-secondary": "#003918",
+              "background": "#0f141b",
+              "on-background": "#dee2ec",
+              "surface-container-high": "#252a32",
+              "secondary-fixed": "#9ff6b0",
+              "surface-tint": "#a4c9ff",
+              "on-primary-fixed": "#001c39",
+              "on-primary-container": "#fefcff",
+              "on-tertiary-fixed": "#321200",
+              "on-surface-variant": "#c0c7d4",
+              "secondary-container": "#026831",
+              "secondary-fixed-dim": "#83d996",
+              "on-secondary-container": "#8de4a0",
+              "surface-container-highest": "#30353d",
+              "inverse-on-surface": "#2c3138",
+              "surface-bright": "#343941",
+              "tertiary": "#ffb68b",
+              "on-secondary-fixed-variant": "#005226",
+              "primary-fixed-dim": "#a4c9ff",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#00210b",
+              "on-error": "#690005"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        font-size: 1.125rem;
+      }
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #414752; border-radius: 2px; }
+      .performance-pulse {
+        height: 2px;
+        background: linear-gradient(90deg, #83d996, #026831);
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .glass-popover {
+        background: rgba(37, 42, 50, 0.8);
+        backdrop-filter: blur(12px);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-hidden w-[380px] h-[520px]">
+<!-- Performance Pulse -->
+<div class="performance-pulse"></div>
+<!-- TopNavBar Implementation from JSON -->
+<header class="flex justify-between items-center px-5 h-12 w-full fixed top-0 z-50 bg-[#1b2027] dark:bg-[#1b2027] font-['Inter'] text-[0.75rem] tracking-tight shadow-none">
+<div class="flex items-center gap-3">
+<span class="text-sm font-bold tracking-tighter text-[#c0c7d4]">SFDevHub</span>
+<div class="h-4 w-[1px] bg-outline-variant opacity-15"></div>
+<div class="flex gap-4">
+<a class="text-[#c0c7d4] hover:bg-[#30353d] transition-colors p-1 rounded" href="#">Export</a>
+<a class="text-[#0176d3] border-b-2 border-[#0176d3] p-1" href="#">Search</a>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-[#c0c7d4] hover:bg-[#30353d] transition-colors p-1 rounded">settings</button>
+<button class="material-symbols-outlined text-[#c0c7d4] hover:bg-[#30353d] transition-colors p-1 rounded">help</button>
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="professional corporate headshot of a developer in a dark environment with blue accent lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwIBOkhPI8QpXUs1eMlLCQKWpT4hBLd5XZ_XjB8VaeXAnx7dmGj8D-dA172bHAPRsYYDFedB0ctzxKdW70aLwRSQN2Rc1CT9MMVbmjpojcf88MqVzY-ac0qiDGtZahL-TiUEI2RkLjln3bCXVajtv3CHt7t7Yy8ynUqiXeTZwvgQ65gTHqn-I4k5SxPQpwx_HkFkogNERb7IZYZbvfV4n0NeOnCy9ITMsVfFI_2uDpB7ZmjVISqkpp1WlG_iHzHToKdmDl-993eGc"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar Simulation (Minimized for Popup View) -->
+<nav class="fixed left-0 top-12 h-[calc(100%-48px)] flex flex-col items-center py-4 z-40 bg-[#171c23] dark:bg-[#171c23] border-r-[1px] border-[#414752]/15 w-12 transition-all duration-150 ease-in-out">
+<div class="flex flex-col gap-6 items-center w-full">
+<button class="material-symbols-outlined text-[#a4c9ff] bg-[#1b2027] border-l-2 border-[#83d996] w-full py-2 flex justify-center" data-icon="data_object">data_object</button>
+<button class="material-symbols-outlined text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 w-full py-2 flex justify-center" data-icon="terminal">terminal</button>
+<button class="material-symbols-outlined text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 w-full py-2 flex justify-center" data-icon="account_tree">account_tree</button>
+<button class="material-symbols-outlined text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 w-full py-2 flex justify-center" data-icon="travel_explore">travel_explore</button>
+<button class="material-symbols-outlined text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100 w-full py-2 flex justify-center" data-icon="construction">construction</button>
+</div>
+<div class="mt-auto flex flex-col gap-4 items-center w-full pb-2">
+<button class="material-symbols-outlined text-[#c0c7d4] opacity-60 hover:bg-[#252a32] w-full py-2 flex justify-center" data-icon="campaign">campaign</button>
+<button class="material-symbols-outlined text-[#c0c7d4] opacity-60 hover:bg-[#252a32] w-full py-2 flex justify-center" data-icon="settings">settings</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-12 mt-12 p-4 h-[calc(100%-48px)] overflow-y-auto bg-surface space-y-4">
+<!-- Environment Indicator -->
+<div class="bg-error-container/20 border-l-2 border-error p-3 flex items-center justify-between rounded-r-sm">
+<div class="flex flex-col">
+<span class="font-label text-[0.6875rem] uppercase tracking-widest text-on-error-container/60">Current Environment</span>
+<span class="font-bold text-error text-sm tracking-tight">PRODUCTION - NA42</span>
+</div>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<!-- Spotlight Search Bar -->
+<div class="relative group">
+<div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+</div>
+<input class="w-full bg-surface-container-high border-none rounded-md py-2.5 pl-10 pr-4 text-xs font-body focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant/40" placeholder="Jump to object or tool..." type="text"/>
+<div class="absolute inset-y-0 right-3 flex items-center">
+<kbd class="text-[0.625rem] bg-surface-container-highest px-1.5 py-0.5 rounded border border-outline-variant/20 text-on-surface-variant">⌘ K</kbd>
+</div>
+</div>
+<!-- Quick Record Info Card -->
+<section class="bg-surface-container-low rounded-lg p-4 space-y-3 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-4xl">database</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-base">corporate_fare</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[0.625rem] text-on-surface-variant uppercase tracking-widest">Active Record</span>
+<h2 class="text-sm font-bold text-on-surface">Acme Corp</h2>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-2">
+<div class="bg-surface-container-lowest p-2 rounded border border-outline-variant/10">
+<span class="block font-label text-[0.625rem] text-on-surface-variant uppercase mb-1">Object</span>
+<span class="text-xs font-medium text-primary">Account</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded border border-outline-variant/10 group/id">
+<div class="flex justify-between items-start">
+<span class="font-label text-[0.625rem] text-on-surface-variant uppercase">Record ID</span>
+<button class="material-symbols-outlined text-[0.75rem] text-on-surface-variant hover:text-primary transition-colors">content_copy</button>
+</div>
+<span class="text-[0.6875rem] font-mono text-on-surface truncate block mt-1">0015...3vA2</span>
+</div>
+</div>
+</section>
+<!-- Features Toggle -->
+<div class="bg-surface-container rounded-md px-3 py-2 flex items-center justify-between border border-outline-variant/5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-base">code</span>
+<span class="text-[0.75rem] font-medium text-on-surface-variant">Show API Names</span>
+</div>
+<button class="w-8 h-4 bg-secondary-container rounded-full relative transition-colors">
+<div class="absolute right-1 top-1 w-2 h-2 bg-secondary rounded-full"></div>
+</button>
+</div>
+<!-- Primary Actions Grid -->
+<div class="grid grid-cols-1 gap-2">
+<button class="flex items-center justify-center gap-2 w-full py-2.5 rounded-md bg-gradient-to-br from-primary-container to-primary text-on-primary-container font-bold text-[0.75rem] shadow-lg shadow-primary-container/20 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+                Open Side Panel
+            </button>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-2 py-2 rounded-md border border-outline-variant/20 hover:bg-surface-container-high transition-colors text-primary text-[0.6875rem] font-semibold active:scale-95">
+<span class="material-symbols-outlined text-sm">copy_all</span>
+                    Copy ID
+                </button>
+<button class="flex items-center justify-center gap-2 py-2 rounded-md border border-outline-variant/20 hover:bg-surface-container-high transition-colors text-primary text-[0.6875rem] font-semibold active:scale-95">
+<span class="material-symbols-outlined text-sm">ios_share</span>
+                    Export JSON
+                </button>
+</div>
+</div>
+<!-- Metadata Context -->
+<div class="pt-2 flex items-center justify-between border-t border-outline-variant/10">
+<div class="flex gap-2">
+<div class="px-2 py-0.5 rounded bg-surface-container-highest text-[0.625rem] font-bold text-on-surface-variant">API v58.0</div>
+<div class="px-2 py-0.5 rounded bg-surface-container-highest text-[0.625rem] font-bold text-on-surface-variant">LWC Enabled</div>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="text-[0.625rem] font-label uppercase text-secondary">Active Connection</span>
+</div>
+</div>
+</main>
+<!-- Contextual Toast (Hidden by default, used for Copy feedback) -->
+<div class="fixed bottom-4 left-1/2 -translate-x-1/2 glass-popover px-4 py-2 rounded-full border border-outline-variant/20 flex items-center gap-2 z-50 pointer-events-none opacity-0 transition-opacity">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-[0.6875rem] font-medium text-on-surface">Copied to clipboard</span>
+</div>
+</body></html>

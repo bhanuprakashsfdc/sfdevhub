@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SFDevHub - Record Overlay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f141b;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+            font-size: 1.25rem;
+        }
+        .glass-panel {
+            background: rgba(37, 42, 50, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .performance-pulse {
+            position: relative;
+        }
+        .performance-pulse::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #83d996, #026831);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface": "#dee2ec",
+                        "inverse-primary": "#005fac",
+                        "on-tertiary": "#522300",
+                        "error-container": "#93000a",
+                        "on-primary": "#00315d",
+                        "on-tertiary-fixed-variant": "#753400",
+                        "on-tertiary-container": "#fffcff",
+                        "secondary": "#83d996",
+                        "primary-container": "#0176d3",
+                        "tertiary-container": "#bc5800",
+                        "outline-variant": "#414752",
+                        "outline": "#8b919e",
+                        "tertiary-fixed": "#ffdbc8",
+                        "on-primary-fixed-variant": "#004884",
+                        "surface-container-low": "#171c23",
+                        "surface-container-lowest": "#090f15",
+                        "surface": "#0f141b",
+                        "surface-container": "#1b2027",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#30353d",
+                        "primary-fixed": "#d4e3ff",
+                        "surface-dim": "#0f141b",
+                        "inverse-surface": "#dee2ec",
+                        "primary": "#a4c9ff",
+                        "tertiary-fixed-dim": "#ffb68b",
+                        "on-secondary": "#003918",
+                        "background": "#0f141b",
+                        "on-background": "#dee2ec",
+                        "surface-container-high": "#252a32",
+                        "secondary-fixed": "#9ff6b0",
+                        "surface-tint": "#a4c9ff",
+                        "on-primary-fixed": "#001c39",
+                        "on-primary-container": "#fefcff",
+                        "on-tertiary-fixed": "#321200",
+                        "on-surface-variant": "#c0c7d4",
+                        "secondary-container": "#026831",
+                        "secondary-fixed-dim": "#83d996",
+                        "on-secondary-container": "#8de4a0",
+                        "surface-container-highest": "#30353d",
+                        "inverse-on-surface": "#2c3138",
+                        "surface-bright": "#343941",
+                        "tertiary": "#ffb68b",
+                        "on-secondary-fixed-variant": "#005226",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#00210b",
+                        "on-error": "#690005"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen overflow-hidden">
+<!-- TopNavBar (Shared Component) -->
+<nav class="flex justify-between items-center px-5 h-12 w-full fixed top-0 z-50 bg-[#1b2027] dark:bg-[#1b2027]">
+<div class="flex items-center gap-6">
+<span class="text-sm font-bold tracking-tighter text-[#c0c7d4]">SFDevHub</span>
+<div class="hidden md:flex gap-4">
+<a class="font-['Inter'] text-[0.75rem] tracking-tight text-[#0176d3] border-b-2 border-[#0176d3] h-12 flex items-center" href="#">Export</a>
+<a class="font-['Inter'] text-[0.75rem] tracking-tight text-[#c0c7d4] hover:bg-[#30353d] transition-colors h-12 flex items-center px-2" href="#">Search</a>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-[#c0c7d4] hover:bg-[#30353d] transition-colors p-1.5 rounded-md"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
+<button class="text-[#c0c7d4] hover:bg-[#30353d] transition-colors p-1.5 rounded-md"><span class="material-symbols-outlined" data-icon="help">help</span></button>
+<button class="text-[#c0c7d4] hover:bg-[#30353d] transition-colors p-1.5 rounded-md"><span class="material-symbols-outlined" data-icon="account_circle">account_circle</span></button>
+</div>
+</nav>
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col items-center py-4 z-40 bg-[#171c23] dark:bg-[#171c23] border-r-[1px] border-[#414752]/15 w-16 pt-16">
+<div class="flex flex-col gap-4 flex-1">
+<button class="flex flex-col items-center justify-center gap-1 w-12 h-12 rounded-md transition-all duration-150 ease-in-out text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="data_object">data_object</span>
+<span class="font-['Inter'] text-[0.6rem] uppercase tracking-tighter">Record</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-12 h-12 rounded-md transition-all duration-150 ease-in-out text-[#a4c9ff] bg-[#1b2027] border-l-2 border-[#83d996]">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-['Inter'] text-[0.6rem] uppercase tracking-tighter">SOQL</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-12 h-12 rounded-md transition-all duration-150 ease-in-out text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-['Inter'] text-[0.6rem] uppercase tracking-tighter">Org</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-12 h-12 rounded-md transition-all duration-150 ease-in-out text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="travel_explore">travel_explore</span>
+<span class="font-['Inter'] text-[0.6rem] uppercase tracking-tighter">Meta</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-12 h-12 rounded-md transition-all duration-150 ease-in-out text-[#c0c7d4] opacity-60 hover:bg-[#252a32] hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="construction">construction</span>
+<span class="font-['Inter'] text-[0.6rem] uppercase tracking-tighter">Dev</span>
+</button>
+</div>
+<div class="flex flex-col gap-4 mt-auto">
+<button class="text-[#c0c7d4] opacity-60 hover:opacity-100"><span class="material-symbols-outlined" data-icon="campaign">campaign</span></button>
+<button class="text-[#c0c7d4] opacity-60 hover:opacity-100"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
+</div>
+</aside>
+<!-- Main Content Stage (Simulated Salesforce Record Page) -->
+<main class="ml-16 mt-12 p-6 h-[calc(100vh-3rem)] overflow-auto bg-surface-dim">
+<header class="flex justify-between items-start mb-6">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary" data-icon="business">business</span>
+<span class="label-sm uppercase tracking-widest text-on-surface-variant text-[0.6875rem]">Account</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-on-surface">CloudKicks Global HQ</h1>
+</div>
+<div class="flex gap-2">
+<span class="bg-error-container text-on-error-container text-[0.6875rem] font-bold px-2 py-0.5 rounded tracking-widest">PROD</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[0.6875rem] font-bold px-2 py-0.5 rounded tracking-widest">NA42</span>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-6">
+<!-- Details Section -->
+<div class="col-span-8 space-y-6">
+<section class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/10">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-sm font-semibold text-on-surface uppercase tracking-wider">Record Details</h2>
+<button class="text-primary text-[0.75rem] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span> Edit
+                        </button>
+</div>
+<div class="grid grid-cols-2 gap-y-4 gap-x-8">
+<div>
+<p class="text-[0.6875rem] text-on-surface-variant uppercase tracking-widest mb-1">Account Name</p>
+<p class="text-sm font-medium">CloudKicks Global HQ</p>
+<p class="text-[0.625rem] text-primary/50 font-mono mt-0.5">Name</p>
+</div>
+<div>
+<p class="text-[0.6875rem] text-on-surface-variant uppercase tracking-widest mb-1">Phone</p>
+<p class="text-sm font-medium">(415) 555-1212</p>
+<p class="text-[0.625rem] text-primary/50 font-mono mt-0.5">Phone</p>
+</div>
+<div>
+<p class="text-[0.6875rem] text-on-surface-variant uppercase tracking-widest mb-1">Account Number</p>
+<p class="text-sm font-medium">CK-99201-B</p>
+<p class="text-[0.625rem] text-primary/50 font-mono mt-0.5">AccountNumber</p>
+</div>
+<div>
+<p class="text-[0.6875rem] text-on-surface-variant uppercase tracking-widest mb-1">Industry</p>
+<p class="text-sm font-medium">Footwear &amp; Apparel</p>
+<p class="text-[0.625rem] text-primary/50 font-mono mt-0.5">Industry</p>
+</div>
+<div>
+<p class="text-[0.6875rem] text-on-surface-variant uppercase tracking-widest mb-1">Website</p>
+<p class="text-sm font-medium text-primary underline decoration-primary/30">www.cloudkicks.com</p>
+<p class="text-[0.625rem] text-primary/50 font-mono mt-0.5">Website</p>
+</div>
+<div>
+<p class="text-[0.6875rem] text-on-surface-variant uppercase tracking-widest mb-1">Owner</p>
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-tertiary-container flex items-center justify-center text-[0.6rem]">JD</div>
+<p class="text-sm font-medium">Jane Doe</p>
+</div>
+<p class="text-[0.625rem] text-primary/50 font-mono mt-0.5">OwnerId</p>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-2 gap-6">
+<section class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/10">
+<h2 class="text-sm font-semibold text-on-surface uppercase tracking-wider mb-4">Contacts</h2>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-2 rounded hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-xs font-medium">Marcos Casal</p>
+<p class="text-[0.625rem] text-on-surface-variant">VP Operations</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 text-on-surface-variant" data-icon="open_in_new">open_in_new</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-xs font-medium">Lila Sato</p>
+<p class="text-[0.625rem] text-on-surface-variant">Senior Buyer</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 text-on-surface-variant" data-icon="open_in_new">open_in_new</span>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/10">
+<h2 class="text-sm font-semibold text-on-surface uppercase tracking-wider mb-4">Opportunities</h2>
+<div class="flex flex-col items-center justify-center h-24 text-center opacity-40">
+<span class="material-symbols-outlined text-3xl mb-1" data-icon="analytics">analytics</span>
+<p class="text-[0.6875rem]">No open opportunities</p>
+</div>
+</section>
+</div>
+</div>
+<!-- Side Intelligence (Sidebar) -->
+<div class="col-span-4 space-y-6">
+<section class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/10">
+<h2 class="text-sm font-semibold text-on-surface uppercase tracking-wider mb-4">Record Intelligence</h2>
+<div class="space-y-4">
+<div class="p-3 bg-surface-container rounded-md border-l-4 border-secondary">
+<p class="text-[0.6875rem] font-bold text-secondary mb-1">SYSTEM INSIGHT</p>
+<p class="text-xs">This record has 2 duplicate candidates in the staging queue.</p>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[0.625rem] text-on-surface-variant">
+<span>DATA COMPLETENESS</span>
+<span>85%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[85%] h-full bg-secondary"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- FLOATING RECORD OVERLAY (Context-Aware) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-1 p-1.5 glass-panel rounded-full shadow-2xl border border-outline-variant/20 performance-pulse">
+<!-- Logo/Anchor -->
+<div class="pl-3 pr-4 flex items-center gap-2 border-r border-outline-variant/20 mr-2">
+<span class="material-symbols-outlined text-secondary" data-icon="hub" style="font-variation-settings: 'FILL' 1;">hub</span>
+<span class="text-[0.625rem] font-bold tracking-[0.15em] text-on-surface-variant">CONTEXT</span>
+</div>
+<!-- Action Buttons Cluster -->
+<div class="flex items-center gap-1">
+<!-- Toggle API Names -->
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-primary-container text-on-primary-container text-[0.6875rem] font-semibold transition-all hover:brightness-110 active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="code">code</span>
+                Toggle API Names
+            </button>
+<!-- Quick Copy ID -->
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-highest text-on-surface text-[0.6875rem] font-medium hover:bg-surface-bright transition-colors group">
+<span class="material-symbols-outlined text-sm text-on-surface-variant group-hover:text-primary" data-icon="content_copy">content_copy</span>
+                Quick Copy ID
+            </button>
+<!-- Object Manager -->
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-highest text-on-surface text-[0.6875rem] font-medium hover:bg-surface-bright transition-colors group">
+<span class="material-symbols-outlined text-sm text-on-surface-variant group-hover:text-primary" data-icon="settings_suggest">settings_suggest</span>
+                Open in Object Manager
+            </button>
+</div>
+<!-- Vertical Separator -->
+<div class="h-6 w-px bg-outline-variant/20 mx-2"></div>
+<!-- Toggle Indicators -->
+<div class="flex items-center gap-4 px-3">
+<label class="flex items-center gap-2 cursor-pointer group">
+<div class="relative w-8 h-4 bg-surface-container-lowest rounded-full border border-outline-variant/30 transition-colors group-hover:border-secondary/50">
+<div class="absolute left-0.5 top-0.5 w-2.5 h-2.5 bg-secondary rounded-full shadow-sm translate-x-4 transition-transform"></div>
+</div>
+<span class="text-[0.625rem] font-bold uppercase tracking-widest text-secondary">Required Fields</span>
+</label>
+</div>
+<!-- Performance Badge -->
+<div class="ml-2 pl-4 pr-5 py-2 bg-secondary-container/20 rounded-r-full flex items-center gap-2 border-l border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary animate-pulse" data-icon="bolt" style="font-size: 1rem;">bolt</span>
+<div class="flex flex-col leading-tight">
+<span class="text-[0.55rem] text-secondary/70 font-bold tracking-tighter uppercase">Performance</span>
+<span class="text-[0.75rem] font-mono font-bold text-secondary">1.2s</span>
+</div>
+</div>
+</div>
+<!-- Background Decor (Aesthetic Gradients) -->
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -z-10 translate-x-1/2 -translate-y-1/2"></div>
+<div class="fixed bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 blur-[100px] rounded-full -z-10 -translate-x-1/2 translate-y-1/2"></div>
+</body></html>
